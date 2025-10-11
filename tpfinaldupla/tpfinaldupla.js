@@ -2,11 +2,15 @@ let textos = [];
 let imagenes = [];
 let pantalla = 0;
 let historial = [];
-
+let intro;
+let musculoso;
 
 //consultar a diegod
 function preload() {
   textos = loadStrings('data/textos.txt');
+  intro = loadSound('data/intro.mp3');
+  musculoso = loadSound('data/musculoso.mp3');
+
 
   for (let i = 0; i <= 40; i++) {
     imagenes[i] = loadImage("data/imagen"+i+".JFIF");
@@ -15,6 +19,7 @@ function preload() {
 
 function setup() {
   createCanvas(640, 480);
+  intro.setLoop(false);
 }
 
 
@@ -64,7 +69,27 @@ function draw() {
 
 
  
-
+function keyPressed() {
+  // Si presionás cualquier tecla, pasa a la siguiente pantalla
+  if (pantalla < imagenes.length - 1) {
+    historial.push(pantalla); // guarda la pantalla actual
+    pantalla++; // avanza una
+  } else {
+    pantalla = 0; // si llegás al final, vuelve al inicio (opcional)
+    historial = [];
+  }
+ 
+  if (
+  pantalla === 13 ||
+  pantalla === 14 ||
+  pantalla === 25 ||
+  pantalla === 31 ||
+  pantalla === 36 ||
+  pantalla === 41) {
+  reiniciarTodo();
+}
+ 
+}
 
 
 function mousePressed() {
@@ -81,7 +106,7 @@ function mousePressed() {
   if (pantalla === 1) {
     let anchoBotonDes = 200;
     // Opcion 1 : van a jugar a la play
-    if (detectarBoton(width/2 - 200, yBoton, anchoBotondes, altoBoton)) {
+    if (detectarBoton(width/2 - 200, yBoton, anchoBotonDes, altoBoton)) {
       SiguientePantalla(2);
       //opcion 2: le dicen que si y van hacerlo
     } else if (detectarBoton(width/2 + 20, yBoton, anchoBotonDes, altoBoton)) {
@@ -93,11 +118,11 @@ function mousePressed() {
   if (pantalla === 3) {
     let anchoBotonDes = 200;
     // Opcion 1 : juegan una mas
-    if (detectarBoton(width/2 - 200, yBoton, anchoBotondes, altoBoton)) {
-      SiguientePantalla(5);
+    if (detectarBoton(width/2 - 200, yBoton, anchoBotonDes, altoBoton)) {
+      SiguientePantalla(4);
       //opcion 2: van hacerlo
     } else if (detectarBoton(width/2 + 20, yBoton, anchoBotonDes, altoBoton)) {
-      SiguientePantalla(16);
+      SiguientePantalla(15);
     }
     return ;
   }
@@ -106,7 +131,7 @@ function mousePressed() {
   if (pantalla === 5) {
     let anchoBotonDes = 200;
     // Opcion 1 : juegan una mas
-    if (detectarBoton(width/2 - 200, yBoton, anchoBotondes, altoBoton)) {
+    if (detectarBoton(width/2 - 200, yBoton, anchoBotonDes, altoBoton)) {
       SiguientePantalla(6);
       //opcion 2: van hacerlo y los descubren
     } else if (detectarBoton(width/2 + 20, yBoton, anchoBotonDes, altoBoton)) {
@@ -118,7 +143,7 @@ function mousePressed() {
   if (pantalla === 16) {
     let anchoBotonDes = 200;
     // Opcion 1 :Rigby
-    if (detectarBoton(width/2 - 200, yBoton, anchoBotondes, altoBoton)) {
+    if (detectarBoton(width/2 - 200, yBoton, anchoBotonDes, altoBoton)) {
       SiguientePantalla(17);
       //opcion 2: Mordecai
     } else if (detectarBoton(width/2 + 20, yBoton, anchoBotonDes, altoBoton)) {
@@ -130,7 +155,7 @@ function mousePressed() {
   if (pantalla === 18) {
     let anchoBotonDes = 200;
     // Opcion 1 : batalla de codigos
-    if (detectarBoton(width/2 - 200, yBoton, anchoBotondes, altoBoton)) {
+    if (detectarBoton(width/2 - 200, yBoton, anchoBotonDes, altoBoton)) {
       SiguientePantalla(19);
       //opcion 2: pedir ayuda a papaleta
     } else if (detectarBoton(width/2 + 20, yBoton, anchoBotonDes, altoBoton)) {
@@ -143,7 +168,7 @@ function mousePressed() {
   if (pantalla === 20) {
     let anchoBotonDes = 200;
     // Opcion 1 : batalla musical
-    if (detectarBoton(width/2 - 200, yBoton, anchoBotondes, altoBoton)) {
+    if (detectarBoton(width/2 - 200, yBoton, anchoBotonDes, altoBoton)) {
       SiguientePantalla(21);
       //opcion 2: IA LOS SUPERA, siguen peleando
     } else if (detectarBoton(width/2 + 20, yBoton, anchoBotonDes, altoBoton)) {
@@ -157,7 +182,7 @@ function mousePressed() {
   if (pantalla === 26) {
     let anchoBotonDes = 200;
     // Opcion 1 :musculoso
-    if (detectarBoton(width/2 - 200, yBoton, anchoBotondes, altoBoton)) {
+    if (detectarBoton(width/2 - 200, yBoton, anchoBotonDes, altoBoton)) {
       SiguientePantalla(27);
       //opcion 2: skipps
     } else if (detectarBoton(width/2 + 20, yBoton, anchoBotonDes, altoBoton)) {
@@ -170,7 +195,7 @@ function mousePressed() {
   if (pantalla === 32) {
     let anchoBotonDes = 200;
     // Opcion 1 : aceptan
-    if (detectarBoton(width/2 - 200, yBoton, anchoBotondes, altoBoton)) {
+    if (detectarBoton(width/2 - 200, yBoton, anchoBotonDes, altoBoton)) {
       SiguientePantalla(33);
       //opcion 2: rechazan
     } else if (detectarBoton(width/2 + 20, yBoton, anchoBotonDes, altoBoton)) {

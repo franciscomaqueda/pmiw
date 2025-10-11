@@ -1,6 +1,23 @@
+function reiniciarTodo() {
+  pantalla = 0;
+  historial = [];} 
+
+
+
 function SiguientePantalla(NuevaPantalla){
  historial.push(pantalla);
  pantalla = NuevaPantalla;
+
+ if (pantalla === 0){
+   if (!intro.isPlaying()){
+     intro.play();
+   }
+ }else{
+   if (intro.isPlaying()){
+     intro.stop();
+   }
+ }
+ 
 }
 
 function VolverPantalla(){
